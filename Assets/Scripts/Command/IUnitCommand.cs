@@ -1,4 +1,4 @@
-public class IUnitCommand : ICommand
+public abstract class IUnitCommand : ICommand
 {
     public int ActorUnitId { get; set; }
     public int TargetUnitId { get; set; }
