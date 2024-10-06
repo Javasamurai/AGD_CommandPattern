@@ -10,18 +10,20 @@ namespace Command.Actions
         private UnitController actorUnit;
         private UnitController targetUnit;
         public TargetType TargetType => TargetType.Self;
+        private bool isSuccessful;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool isSuccessful)
         {
             this.actorUnit = actorUnit;
             this.targetUnit = targetUnit;
+            this.isSuccessful = isSuccessful;
 
-            actorUnit.PlayBattleAnimation(ActionType.BerserkAttack, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
+            actorUnit.PlayBattleAnimation(CommandType.ThirdEye, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
         }
 
         public void OnActionAnimationCompleted()
         {
-            if (IsSuccessful())
+            if (isSuccessful)
             {
                 int healthToConvert = (int)(targetUnit.CurrentHealth * 0.25f);
                 targetUnit.TakeDamage(healthToConvert);
@@ -31,7 +33,7 @@ namespace Command.Actions
                 GameService.Instance.UIService.ActionMissed();
         }
 
-        public bool IsSuccessful() => true;
+        // public bool IsSuccessful() => true;
 
         public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
     }

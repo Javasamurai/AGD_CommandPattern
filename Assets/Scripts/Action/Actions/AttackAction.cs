@@ -10,20 +10,22 @@ namespace Command.Actions
         private UnitController actorUnit;
         private UnitController targetUnit;
         public TargetType TargetType => TargetType.Enemy;
+        private bool isSuccessful;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool isSuccessful)
         {
             this.actorUnit = actorUnit;
             this.targetUnit = targetUnit;
+            this.isSuccessful = isSuccessful;
 
-            actorUnit.PlayBattleAnimation(ActionType.Attack, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
+            actorUnit.PlayBattleAnimation(CommandType.Attack, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
         }
 
         public void OnActionAnimationCompleted() 
         {
             PlayAttackSound();
 
-            if (IsSuccessful())
+            if (isSuccessful)
                 targetUnit.TakeDamage(actorUnit.CurrentPower);
             else
                 GameService.Instance.UIService.ActionMissed();

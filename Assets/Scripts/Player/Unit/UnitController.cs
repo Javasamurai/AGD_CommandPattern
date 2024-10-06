@@ -91,19 +91,19 @@ namespace Command.Player
             unitView.PlayAnimation(UnitAnimations.DEATH);
         }
 
-        public void PlayBattleAnimation(ActionType actionType, Vector3 battlePosition, Action callback)
+        public void PlayBattleAnimation(Actions.CommandType actionType, Vector3 battlePosition, Action callback)
         {
             GameService.Instance.UIService.ResetBattleBackgroundOverlay();
             MoveToBattlePosition(battlePosition, callback, true, actionType);
         }
 
-        private void MoveToBattlePosition(Vector3 battlePosition, Action callback = null,  bool shouldPlayActionAnimation = true, ActionType actionTypeToExecute = ActionType.None)
+        private void MoveToBattlePosition(Vector3 battlePosition, Action callback = null,  bool shouldPlayActionAnimation = true, Actions.CommandType actionTypeToExecute = Actions.CommandType.None)
         {
             float moveTime = Vector3.Distance(unitView.transform.position, battlePosition) / unitScriptableObject.MovementSpeed;
             unitView.StartCoroutine(MoveToPositionOverTime(battlePosition, moveTime, callback, shouldPlayActionAnimation, actionTypeToExecute));
         }
 
-        private IEnumerator MoveToPositionOverTime(Vector3 targetPosition, float time, Action callback, bool shouldPlayActionAnimation, ActionType actionTypeToExecute)
+        private IEnumerator MoveToPositionOverTime(Vector3 targetPosition, float time, Action callback, bool shouldPlayActionAnimation, Actions.CommandType actionTypeToExecute)
         {
             float elapsedTime = 0;
             Vector3 startingPosition = unitView.transform.position;
@@ -124,9 +124,9 @@ namespace Command.Player
                 callback.Invoke();
         }
 
-        private void PlayActionAnimation(ActionType actionType)
+        private void PlayActionAnimation(Actions.CommandType actionType)
         {
-            if (actionType == ActionType.None)
+            if (actionType == Actions.CommandType.None)
                 return;
             
             if (actionType == unitScriptableObject.executableCommands[0])

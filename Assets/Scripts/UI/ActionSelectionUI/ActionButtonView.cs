@@ -9,7 +9,7 @@ namespace Command.UI
     {
         [SerializeField] private TextMeshProUGUI buttonText;
         private ActionSelectionUIController owner;
-        private ActionType actionType;
+        private Actions.CommandType actionType;
 
         private void Start() => GetComponent<Button>().onClick.AddListener(OnActionButtonClicked);
 
@@ -18,7 +18,7 @@ namespace Command.UI
         // To Learn more about Events and Observer Pattern, check out the course list here: https://outscal.com/courses
         private void OnActionButtonClicked() => owner.OnActionSelected(actionType);
 
-        public void SetCommandType(ActionType actionType)
+        public void SetCommandType(Actions.CommandType actionType)
         {
             this.actionType = actionType;
             buttonText.SetText(actionType.ToString());

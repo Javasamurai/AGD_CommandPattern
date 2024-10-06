@@ -11,20 +11,22 @@ namespace Command.Actions
         private UnitController actorUnit;
         private UnitController targetUnit;
         public TargetType TargetType => TargetType.Enemy;
+        private bool isSuccessful;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool isSuccessful)
         {
             this.actorUnit = actorUnit;
             this.targetUnit = targetUnit;
+            this.isSuccessful = isSuccessful;
 
-            actorUnit.PlayBattleAnimation(ActionType.BerserkAttack, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
+            actorUnit.PlayBattleAnimation(CommandType.BerserkAttack, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
         }
 
         public void OnActionAnimationCompleted()
         {
             GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.BERSERK_ATTACK);
 
-            if (IsSuccessful())
+            if (isSuccessful)
                 targetUnit.TakeDamage(actorUnit.CurrentPower * 2);
             else
             {
