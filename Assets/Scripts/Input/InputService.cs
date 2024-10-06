@@ -60,6 +60,8 @@ namespace Command.Input
             {
                 case CommandType.Attack:
                     return new AttackCommand(commandData);
+                case CommandType.AttackStance:
+                    return new AttackStanceCommand(commandData);
                 case CommandType.Heal:
                     return new HealCommand(commandData);
                 case CommandType.Cleanse:
