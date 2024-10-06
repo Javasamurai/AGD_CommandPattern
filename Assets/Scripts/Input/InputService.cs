@@ -1,6 +1,7 @@
 using Command.Main;
 using Command.Player;
 using Command.Actions;
+using System;
 
 namespace Command.Input
 {
@@ -48,7 +49,36 @@ namespace Command.Input
         public void OnTargetSelected(UnitController targetUnit)
         {
             SetInputState(InputState.EXECUTING_INPUT);
-            GameService.Instance.PlayerService.PerformAction(selectedActionType, targetUnit);
+            UnitCommand command = CreateUnitCommand(selectedActionType, targetUnit);
+            GameService.Instance.ProcessUnitCommand(command);
+        }
+
+        private UnitCommand CreateUnitCommand(CommandType selectedActionType, UnitController targetUnit)
+        {
+            CommandData commandData = CreateUnitCommandData(targetUnit);
+            switch(selectedActionType)
+            {
+                case CommandType.Attack:
+                    return new AttackCommand(commandData);
+                case CommandType.Heal:
+                    return new HealCommand(commandData);
+                case CommandType.Cleanse:
+                    return new CleanserCommand(commandData);
+                case CommandType.ThirdEye:
+                    return new ThirdEyeCommand(commandData);
+                case CommandType.Meditate:
+                    return new MeditateCommand(commandData);
+                case CommandType.BerserkAttack:
+                    return new BerserkCommand(commandData);
+                
+                default:
+                    throw new ArgumentException("Invalid action type");
+            }
+        }
+
+        private CommandData CreateUnitCommandData(UnitController targetUnit)
+        {
+            return new CommandData(GameService.Instance.PlayerService.ActivePlayerID, targetUnit.UnitID, GameService.Instance.PlayerService.ActivePlayerID, targetUnit.Owner.PlayerID);
         }
     }
 }
