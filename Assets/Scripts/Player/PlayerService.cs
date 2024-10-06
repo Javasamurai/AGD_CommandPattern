@@ -100,5 +100,19 @@ namespace Command.Player
             else if (player2.AllUnitsDead())
                 PlayerDied(player2);
         }
+
+        public void ProcessUnitCommand(UnitCommand unitCommand)
+        {
+            SetUnitReference(unitCommand);
+            GetPlayerById(unitCommand.commandData.ActorPlayerId).ProcessUnitCommand(unitCommand);
+        }
+
+        private void SetUnitReference(UnitCommand unitCommand)
+        {
+            var actorUnit = GetPlayerById(unitCommand.commandData.ActorPlayerId).GetUnitByID(unitCommand.commandData.ActorUnitId);
+            var targetUnit = GetPlayerById(unitCommand.commandData.TargetPlayerId).GetUnitByID(unitCommand.commandData.TargetUnitId);
+            unitCommand.SetActorUnit(actorUnit);
+            unitCommand.SetTargetUnit(targetUnit);
+        }
     }
 }

@@ -32,6 +32,7 @@ namespace Command.Main
 
         [SerializeField] private UIService uiService;
         public UIService UIService => uiService;
+        public CommandInvoker CommandInvoker { get; private set; }
 
         // Scriptable Objects:
         [SerializeField] private SoundScriptableObject soundScriptableObject;
@@ -49,14 +50,15 @@ namespace Command.Main
             InputService = new InputService();
             BattleService = new BattleService(battleScriptableObjects);
             PlayerService = new PlayerService();
+            CommandInvoker = new CommandInvoker();
             uiService.Init(battleScriptableObjects.Count);
         }
 
         private void Update() => InputService.UpdateInputService();
 
-        public void ProcessUnitCommand(UnitCommand command)
+        public void ProcessUnitCommand(ICommand command)
         {
-            
+            PlayerService.ProcessUnitCommand(command as UnitCommand);
         }
     }
 }

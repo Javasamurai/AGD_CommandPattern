@@ -7,7 +7,6 @@ namespace Command.Actions
 {
     public class BerserkAttackAction : IAction
     {
-        private const float hitChance = 0.66f;
         private UnitController actorUnit;
         private UnitController targetUnit;
         public TargetType TargetType => TargetType.Enemy;
@@ -34,8 +33,6 @@ namespace Command.Actions
                 Debug.Log("actor unit must be hit now.");
             }
         }
-
-        public bool IsSuccessful() => Random.Range(0f, 1f) < hitChance;
 
         public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
     }

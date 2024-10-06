@@ -33,8 +33,6 @@ namespace Command.Actions
                 GameService.Instance.UIService.ActionMissed();
         }
 
-        // public bool IsSuccessful() => true;
-
         public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
     }
 }

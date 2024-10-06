@@ -1,9 +1,13 @@
+using System;
 using Command.Actions;
+using UnityEngine;
 
 namespace Command.Main
 {
     public class BerserkCommand : UnitCommand
     {
+        private const float hitChance = 0.66f;
+
         private bool willHitTarget;
         public BerserkCommand(CommandData data)
         {
@@ -18,7 +22,7 @@ namespace Command.Main
 
         public override bool WillHitTarget()
         {
-            return true;
+            return UnityEngine.Random.Range(0f, 1f) < hitChance;
         }
     }
 }
