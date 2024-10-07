@@ -91,5 +91,23 @@ namespace Command.Player
             activeUnitIndex--;
             units[activeUnitIndex].StartUnitTurn();
         }
+
+        public void ResetCurrentActiveUnit()
+        {
+            units[activeUnitIndex].ResetUnitIndicator();
+            activeUnitIndex--;
+            while (activeUnitIndex >= 0)
+            {
+                if (!units[activeUnitIndex].IsAlive())
+                {
+                    activeUnitIndex--;
+                }
+                else
+                {
+                    units[activeUnitIndex].StartUnitTurn();
+                    break;
+                }
+            }
+        }
     }
 }
