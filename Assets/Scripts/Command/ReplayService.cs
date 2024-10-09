@@ -12,7 +12,7 @@ public class ReplayService {
         INACTIVE
     }
 
-    private ReplayState replayState;
+    public ReplayState replayState { get; private set; }
     public ReplayService()
     {
         commandStack = new Stack<ICommand>();

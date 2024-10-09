@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Command.Main;
 using UnityEngine.UI;
+using System;
 
 namespace Command.Battle
 {
@@ -16,7 +17,16 @@ namespace Command.Battle
             SubscribeToEvents();
         }
 
-        private void SubscribeToEvents() => GameService.Instance.EventService.OnBattleSelected.AddListener(LoadBattle);
+        private void SubscribeToEvents()
+        {
+            GameService.Instance.EventService.OnBattleSelected.AddListener(LoadBattle);
+            GameService.Instance.EventService.OnReplayButtonClicked.AddListener(ReplayBattle);
+        }
+
+        private void ReplayBattle()
+        {
+            LoadBattle(currentBattleId);
+        }
 
         private void LoadBattle(int battleId)
         {
