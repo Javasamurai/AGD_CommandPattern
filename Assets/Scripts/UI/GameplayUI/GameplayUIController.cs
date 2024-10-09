@@ -24,6 +24,11 @@ namespace Command.UI
             gameplayView.ShowPlayerOverlay(activePlayer, OverlayColorType.Neutral);
         }
 
+        public void OnUndoButtonClicked()
+        {
+            GameService.Instance.CommandInvoker.Undo();
+        }
+
         public void ShowTargetOverlay(int activePlayer, TargetType targetType)
         {
             ResetBattleBackgroundOverlay();

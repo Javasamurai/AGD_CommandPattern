@@ -1,5 +1,6 @@
 using Command.Main;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 namespace Command.Commands
 {
@@ -21,8 +22,8 @@ namespace Command.Commands
         {
             if (commandRegistry.Count > 0)
             {
-                ICommand command = commandRegistry.Peek();
-                return command.ActorUnit.Owner == GameService.Instance.PlayerService.ActivePlayerID;
+                UnitCommand command = commandRegistry.Peek()  as UnitCommand;
+                return command.commandData.ActorPlayerID == GameService.Instance.PlayerService.ActivePlayerID;
             }
             return false;
         }
