@@ -14,6 +14,12 @@ namespace Command.Commands
 
         public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.ThirdEye).PerformAction(actorUnit, targetUnit, willHitTarget);
 
+        public override void Undo()
+        {
+            var damageToDeal = (int)(targetUnit.CurrentMaxHealth * 0.2f);
+            targetUnit.TakeDamage(damageToDeal);
+        }
+
         public override bool WillHitTarget() => true;
     } 
 }
